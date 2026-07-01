@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Validate from "./Validate.js";
+import React from "react";
+import Validate from "./Validate";
 
 
 const Login = (props) => {

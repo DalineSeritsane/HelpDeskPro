@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 
@@ -6,20 +6,20 @@ const ChangePassword = (props) => {
     let [confirm, setConfirm] = useState("");
     const changePassword = () => {
         const newPasswordUser = document.querySelector("input[name='new-password']")
-            let newPassword = '"';
-            if (newPasswordUser) {
-                newPassword = newPasswordUser.value;
-            }
-            if (newPassword !== "") {
-                axios.put("change-password", 
-                    { 
-                        email: sessioinStorage.getItem("email"),
-                        password: document.querySelector("input[name='new-password']").value
-                    },
+        let newPassword = "";
+        if (newPasswordUser) {
+            newPassword = newPasswordUser.value;
+        }
+        if (newPassword !== "") {
+            axios.put("change-password",
+                {
+                    email: sessionStorage.getItem("email"),
+                    password: document.querySelector("input[name='new-password']").value
+                },
                 props.config
             ).then(
                 (response) => {
-                    if (res.data.affectedRowa > 0) {
+                    if (response?.data?.affectedRows > 0) {
                         props.showAlert("Password changed.", "success");
                         document.querySelector("input[name='new-password']").value = "";
                         setConfirm((confirm) => "");
@@ -30,12 +30,10 @@ const ChangePassword = (props) => {
                     props.showAlert("Password not changed.", "danger");
                 }
             )
-        } else {
+        } else if (newPasswordUser) {
             newPasswordUser.classList.add("is-invalid");
         }
-
-
-}
+    }
 
 return (
     <div className="form-group py-2 ">
