@@ -29,6 +29,10 @@ function App() {
     const fetchTickets = async () => {
       try {
         const response = await fetch(`${API_BASE}/tickets`);
+        if (!response.ok) {
+          console.error('Failed to fetch tickets:', response.status);
+          return;
+        }
         const data = await response.json();
         setTickets(data.tickets || []);
       } catch (error) {
@@ -36,8 +40,10 @@ function App() {
       }
     };
 
-    fetchTickets();
-  }, []);
+    if (currentUser) {
+      fetchTickets();
+    }
+  }, [currentUser]);
 
   const isAdmin = useMemo(() => currentUser?.email === ADMIN_EMAIL || currentUser?.role === 'admin', [currentUser]);
 
