@@ -6,7 +6,7 @@ import TicketPage from './components/TicketPage';
 import AdminDashboard from './components/AdminDashboard';
 
 const ADMIN_EMAIL = 'admin@helpdesk.com';
-const API_BASE = '/api';
+const API_BASE = 'https://helpdeskpro-xx.onrender.com/api';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(() => {
