@@ -35,7 +35,7 @@ const DeleteUser = (props) => {
             </button>
             {infoMessage === "delete-user" ?
                 <div className="alert alert-danger" role="alert">
-                    Are you sure you want to delete {props.userEmail} ?
+                    Are you sure you want to delete? {props.userEmail} ?
                     <button className="btn btn-block btn-danger" onClick={() => deleteUser()}>Yes</button>
                     <button className="btn btn-block btn-info" onClick={() => setInfoMessage((infoMessage) => "")}>No</button>
                 </div>
