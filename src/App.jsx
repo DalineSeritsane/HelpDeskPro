@@ -6,7 +6,7 @@ import TicketPage from './components/TicketPage';
 import AdminDashboard from './components/AdminDashboard';
 
 const ADMIN_EMAIL = 'admin@helpdesk.com';
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_BASE || `${window.location.origin}/api`;
 
 function App() {
   const [currentUser, setCurrentUser] = useState(() => {

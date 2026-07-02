@@ -10,6 +10,12 @@ import Ticket from './models/Ticket.js';
 
 dotenv.config();
 
+// Validate required environment variables
+if (!process.env.MONGODB_URI) {
+  console.error('ERROR: MONGODB_URI environment variable is not set');
+  process.exit(1);
+}
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -48,11 +54,12 @@ const ensureAdminUser = async () => {
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(async () => {
-    console.log('MongoDB Atlas connected');
+    console.log('✓ MongoDB Atlas connected successfully');
     await ensureAdminUser();
   })
   .catch((err) => {
-    console.error('MongoDB connection error:', err);
+    console.error('✗ MongoDB connection error:', err.message);
+    process.exit(1);
   });
 
 // Health Check
@@ -227,5 +234,7 @@ app.get('*', (req, res) => {
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`✓ Server running on port ${PORT}`);
+  console.log(`✓ API available at http://localhost:${PORT}/api`);
+  console.log(`✓ Environment: ${process.env.NODE_ENV || 'development'}`);
 });
