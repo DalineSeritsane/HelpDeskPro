@@ -8,7 +8,11 @@ import { fileURLToPath } from 'url';
 import User from './models/User.js';
 import Ticket from './models/Ticket.js';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load .env from project root
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // Validate required environment variables
 if (!process.env.MONGODB_URI) {
@@ -18,10 +22,6 @@ if (!process.env.MONGODB_URI) {
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(cors());
@@ -226,10 +226,11 @@ app.put('/api/tickets/:id', async (req, res) => {
 });
 
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// Catch-all route for SPA - must be last
+app.get(/.*/, (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
 // Start Server
